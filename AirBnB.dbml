@@ -1,0 +1,53 @@
+Table Users {
+  id int [pk, not null]
+  username varchar [unique, not null]
+  email varchar [unique, not null]
+  hashedPassword varbinary [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Spots {
+  id int [pk, not null]
+  name varchar [not null]
+  description text
+  address varchar
+  city varchar
+  state varchar [null]
+  country varchar
+  userId int
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Bookings {
+  id int [pk, not null]
+  userId int
+  spotId int
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Reviews {
+  id int [pk, not null]
+  userId int
+  spotId int
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Bonus_Messages {
+  id int [pk, not null]
+  senderId int
+  receiverId int
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Ref: "Bonus_Messages"."senderId" < "Users"."id"
+Ref: "Bonus_Messages"."receiverId" < "Users"."id"
+Ref: "Bookings"."userId" < "Users"."id"
+Ref: "Bookings"."spotId" < "Spots"."id"
+Ref: "Spots"."userId" < "Users"."id"
+Ref: "Reviews"."userId" < "Users"."id"
+Ref: "Reviews"."spotId" < "Spots"."id"
