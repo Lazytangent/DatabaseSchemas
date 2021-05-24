@@ -3,6 +3,55 @@ Table Users {
   username varchar [not null, unique]
   email varchar [not null, unique]
   hashedPassword varbinary [not null]
+  bio text
   createdAt datetime [not null, default: "func.now()"]
   updatedAt datetime [not null, default: "func.now()"]
 }
+
+Table Songs {
+  id int [pk, not null]
+  name varchar [not null]
+  artistId int [not null]
+  description text [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table UserImages {
+  id int [pk, not null]
+  userId int [not null]
+  imageUrl varchar [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table SongImages {
+  id int [pk, not null]
+  songId int [not null]
+  imageUrl varchar [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Bonus_Purchases {
+  id int [pk, not null]
+  userId int [not null]
+  songId int [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Table Bonus_Follows {
+  id int [pk, not null]
+  followerId int [not null]
+  userId int [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
+
+Ref: "UserImages"."userId" < "Users"."id"
+Ref: "Bonus_Follows"."userId" < "Users"."id"
+Ref: "Bonus_Follows"."followerId" < "Users"."id"
+Ref: "Bonus_Purchases"."userId" < "Users"."id"
+Ref: "Bonus_Purchases"."songId" < "Songs"."id"
+Ref: "Songs"."artistId" < "Users"."id"
