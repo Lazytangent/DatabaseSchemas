@@ -1,0 +1,8 @@
+Table Users {
+  id int [pk, not null]
+  username varchar [not null, unique]
+  email varchar [not null, unique]
+  hashedPassword varbinary [not null]
+  createdAt datetime [not null, default: "func.now()"]
+  updatedAt datetime [not null, default: "func.now()"]
+}
